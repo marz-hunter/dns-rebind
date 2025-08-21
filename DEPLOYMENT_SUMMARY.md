@@ -16,7 +16,7 @@ Proyek DNSfookup Anda telah berhasil diperbarui dan siap untuk deployment produc
 ### 1. Automated Deployment (Recommended)
 ```bash
 # Di VPS Ubuntu Anda:
-git clone https://github.com/your-username/dnsFookup.git
+git clone https://github.com/marz-hunter/dns-rebind.git
 cd dnsFookup
 chmod +x deploy.sh
 ./deploy.sh rebind.com 45.67.67.55
