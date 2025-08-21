@@ -1,0 +1,30 @@
+# Core Flask and extensions
+Flask==3.1.1
+Flask-SQLAlchemy==3.1.1
+Flask-RESTful==0.3.10
+Flask-JWT-Extended==4.6.0
+Flask-CORS==5.0.0
+Flask-Migrate==4.0.7
+
+# Database
+psycopg2-binary==2.9.9
+SQLAlchemy==2.0.36
+
+# DNS and networking
+dnslib==0.9.25
+
+# Validation and utilities
+jsonschema==4.23.0
+validators==0.34.0
+
+# Security
+passlib[bcrypt]==1.7.4
+
+# Caching
+redis==5.2.1
+
+# Utilities
+PyYAML==6.0.2
+
+# WSGI server
+uWSGI==2.0.28

@@ -1,0 +1,34 @@
+sql:
+        protocol: 'postgresql+psycopg2'
+        user: 'postgres'
+        password: 'CHANGETHISTOO'
+        host: 'localhost'
+        db: 'dnsfookup'
+        deprec_warn: false
+
+jwt:
+        secret_key: 'changeme'
+        blacklist_enabled: true
+        blacklist_token_checks: ['access']
+        token_expires: 21600 # 6 hours
+
+redis:
+        password: 'CHANGETHISPW'
+        host: '127.0.0.1'
+        port: 6379
+        expiration: 3600 # expiration of redis key - default = 3600s
+        timeout: 3
+
+dns:
+        domain: 'gel0.space'
+        #UDP port DNS server will listen on, for testing purposes it's on 5053,
+        #if you want to deploy the app on server change this to 53
+        port: 53
+        ip: '127.0.0.1'
+        # Failure ip - If server runs over some error it tries to
+        # resolve to this ip (If that is possible)
+        # if use_failure_ip is false, server will return NXDOMAIN
+        use_failure_ip: false
+        failure_ip: '0.0.0.0'
+        use_fail_ns: true # when for example google.com is requested from the dns server, return ns record with IP pointing to fail_ns
+        fail_ns: '8.8.8.8'
