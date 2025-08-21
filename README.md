@@ -89,13 +89,28 @@ For production deployment with your own domain:
 git clone https://github.com/your-username/dnsFookup.git
 cd dnsFookup
 
-# 2. Run automated deployment
+# 2. Run automated deployment (with smart dependency checking)
 chmod +x deploy.sh
 ./deploy.sh rebind.com 45.67.67.55
 
 # 3. Configure Cloudflare DNS (see CLOUDFLARE_SETUP.md)
-# 4. Test your deployment
+
+# 4. Check versions and status
+chmod +x check_versions.sh
+./check_versions.sh rebind.com
+
+# 5. Test deployment
+chmod +x test_deployment.sh
+./test_deployment.sh rebind.com 45.67.67.55
 ```
+
+### 🔧 Smart Deployment Features:
+- **Dependency Detection**: Checks existing installations (Node.js, Python, Docker, etc.)
+- **Version Validation**: Ensures compatible versions (Node.js 18+, Python 3.9+)
+- **Incremental Updates**: Only installs missing components
+- **Service Management**: Detects running services and avoids conflicts
+- **SSL Certificate Management**: Checks expiry and renews when needed
+- **Database Persistence**: Preserves existing data during updates
 
 ### Example Production URLs:
 - **Frontend**: https://app.rebind.com

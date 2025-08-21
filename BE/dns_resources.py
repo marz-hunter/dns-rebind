@@ -1,6 +1,6 @@
 from flask_restful import Resource, reqparse
 from models import UserModel, RevokedTokenModel, DnsModel, LogModel
-from flask_jwt_extended import (create_access_token, create_refresh_token, jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
+from flask_jwt_extended import (create_access_token, create_refresh_token, jwt_required, get_jwt_identity, get_jwt)
 import json
 from uuid import uuid4
 from redis import StrictRedis
@@ -52,7 +52,7 @@ def checkKeys(lst):
     return good
 
 class CreateRebindToken(Resource):
-    @jwt_required
+    @jwt_required()
     def post(self):
         """
         This function creates new rebind subdomain from json looking something like this:
@@ -213,7 +213,7 @@ class CreateRebindToken(Resource):
             return {'message': 'Something went wrong'}, 500
 
 class GetUserTokens(Resource):
-    @jwt_required
+    @jwt_required()
     def get(self):
         """
         returns all dns tokens owned by a logged in user
@@ -221,7 +221,7 @@ class GetUserTokens(Resource):
         return DnsModel.find_by_user(get_jwt_identity())
 
 class GetProps(Resource):
-    @jwt_required
+    @jwt_required()
     def post(self):
         """
         returns info about dns token
@@ -256,7 +256,7 @@ class GetProps(Resource):
         return {"msg": "An error occured"}
 
 class GetUserLogs(Resource):
-    @jwt_required
+    @jwt_required()
     def get(self):
         """
         Returns all user logs :O
@@ -264,7 +264,7 @@ class GetUserLogs(Resource):
         return LogModel.return_all(get_jwt_identity())
 
 class GetUuidLogs(Resource):
-    @jwt_required
+    @jwt_required()
     def post(self):
         """
         Returns logs of supplied token
@@ -279,7 +279,7 @@ class GetUuidLogs(Resource):
         return {'pages': pages, 'data': data, 'entries': entries}
 
 class DeleteUUID(Resource):
-    @jwt_required
+    @jwt_required()
     def post(self):
         parser = reqparse.RequestParser()
         parser.add_argument('uuid', help = 'This field cannot be blank', required = True)
@@ -303,7 +303,7 @@ class GetStatistics(Resource):
     }
 
     """
-    @jwt_required
+    @jwt_required()
     def get(self):
         return LogModel.statistics_count(get_jwt_identity())
 
@@ -311,7 +311,7 @@ class iDontWannaBeAnymore(Resource):
     """
     Deletes all tokens and logs then finally the user him(or her)self
     """
-    @jwt_required
+    @jwt_required()
     def post(self):
         parser = reqparse.RequestParser()
         parser.add_argument('password', help = 'This field cannot be blank', required = True)
@@ -327,7 +327,7 @@ class iDontWannaBeAnymore(Resource):
         del_user = UserModel.delete_user(get_jwt_identity())
 
 
-        jti = get_raw_jwt()['jti']
+        jti = get_jwt()['jti']
         try:
             revoked_token = RevokedTokenModel(jti = jti)
             revoked_token.add()

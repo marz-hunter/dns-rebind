@@ -1,5 +1,5 @@
 from flask_restful import Resource, reqparse
-from flask_jwt_extended import (create_access_token, create_refresh_token, jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
+from flask_jwt_extended import (create_access_token, create_refresh_token, jwt_required, get_jwt_identity, get_jwt)
 
 
 from models import UserModel, RevokedTokenModel
@@ -57,9 +57,9 @@ class UserLogin(Resource):
 
 
 class UserLogoutAccess(Resource):
-    @jwt_required
+    @jwt_required()
     def post(self):
-        jti = get_raw_jwt()['jti']
+        jti = get_jwt()['jti']
         try:
             revoked_token = RevokedTokenModel(jti = jti)
             revoked_token.add()
@@ -68,12 +68,12 @@ class UserLogoutAccess(Resource):
             return {'message': 'Something went wrong', 'error': True}
 
 class UserName(Resource):
-    @jwt_required
+    @jwt_required()
     def get(self):
         return {"name": get_jwt_identity()}
 
 class ChangePw(Resource):
-    @jwt_required
+    @jwt_required()
     def post(self):
         parser = reqparse.RequestParser()
         parser.add_argument('old_password', help = 'This field cannot be blank', required = True)
