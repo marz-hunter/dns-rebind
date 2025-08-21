@@ -1,0 +1,40 @@
+# DNS Rebinding Tool Configuration
+# Copy this file to .env and modify the values
+
+# Domain configuration
+DOMAIN=myrebinding.com
+SERVER_IP=77.77.77.77
+
+# Default attack mode (ec2, ecs, gcloud)
+DEFAULT_MODE=ec2
+
+# Server configuration
+HTTP_PORT=80
+HTTPS_PORT=443
+DNS_PORT=53
+
+# SSL configuration
+SSL_ENABLED=true
+SSL_CERT_PATH=/etc/letsencrypt/live/myrebinding.com/fullchain.pem
+SSL_KEY_PATH=/etc/letsencrypt/live/myrebinding.com/privkey.pem
+
+# Logging configuration
+LOG_LEVEL=INFO
+LOG_FILE=logs/rebinding.log
+
+# DNS configuration
+TTL=0
+DNS_CACHE_FLUSH_COUNT=2500
+
+# Security settings (for production)
+ENABLE_HTTPS_REDIRECT=true
+ENABLE_SECURITY_HEADERS=true
+
+# Metadata service IPs
+EC2_METADATA_IP=169.254.169.254
+ECS_METADATA_IP=169.254.170.2
+GCP_METADATA_IP=169.254.169.254
+
+# Attack timeouts (seconds)
+DNS_REBIND_TIMEOUT=60
+METADATA_REQUEST_TIMEOUT=5

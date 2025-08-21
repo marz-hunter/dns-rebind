@@ -1,0 +1,25 @@
+<VirtualHost *:80>
+    ServerName myrebinding.com
+    ServerAlias *.myrebinding.com
+    DocumentRoot /var/www/html
+    
+    # Proxy configuration to forward requests to our Python application
+    ProxyPreserveHost On
+    ProxyPass / http://127.0.0.1:8080/
+    ProxyPassReverse / http://127.0.0.1:8080/
+    
+    # Enable headers module for debugging (optional)
+    Header always set X-Forwarded-Proto "http"
+    
+    # Logging
+    ErrorLog ${APACHE_LOG_DIR}/rebinding_error.log
+    CustomLog ${APACHE_LOG_DIR}/rebinding_access.log combined
+    
+    # Security headers (optional but recommended)
+    Header always set X-Content-Type-Options nosniff
+    Header always set X-Frame-Options DENY
+    Header always set X-XSS-Protection "1; mode=block"
+</VirtualHost>
+
+# HTTPS configuration will be automatically added by Certbot
+# when you run: sudo certbot --apache -d myrebinding.com -d *.myrebinding.com
